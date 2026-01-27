@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AM Esportes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+    <div id="login-screen" class="login-container">
+        <div class="login-box">
+            <i class="fas fa-shield-halved" style="font-size: 3rem; color: var(--primary-yellow); margin-bottom: 20px;"></i>
+            <h2 style="color: white; font-family: 'Barlow Condensed'; margin-bottom: 20px;">ADMINISTRADOR</h2>
+            <input type="email" id="email" placeholder="E-mail" class="admin-input" style="margin-bottom: 10px;">
+            <input type="password" id="password" placeholder="Senha" class="admin-input" style="margin-bottom: 20px;">
+            <button id="btn-login" class="btn-cta" style="width:100%;">ENTRAR</button>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="hidden" style="width: 100%; display: flex;">
+        <nav class="admin-sidebar">
+            <div class="admin-logo">AM ESPORTES<br><span style="font-size: 0.8rem; color: #666;">PAINEL 2.0</span></div>
+            <div class="nav-item active" onclick="showSection('products', this)"><i class="fas fa-tshirt"></i> Catálogo</div>
+            <div class="nav-item" onclick="showSection('categories', this)"><i class="fas fa-tags"></i> Categorias</div>
+            <div class="nav-item" onclick="showSection('banner', this)"><i class="fas fa-image"></i> Banner Principal</div>
+            <div class="nav-item" onclick="showSection('dashboard', this)"><i class="fas fa-chart-line"></i> Métricas</div>
+            
+            <div class="sidebar-footer">
+                <div class="nav-item" onclick="logout()" style="color: #ff4444; border: 1px solid #ff444433;">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </div>
+            </div>
+        </nav>
+
+        <main class="admin-main">
+            
+            <div id="sec-products" class="content-section active">
+                <div class="admin-header"><h2>GERENCIAR PRODUTOS</h2></div>
+                <div class="admin-wrapper">
+                    <div class="admin-form-col">
+                        <h3>NOVO PRODUTO</h3>
+                        <form id="add-product-form">
+                            <div class="input-group"><label>Nome</label><input type="text" id="prod-name" class="admin-input" required></div>
+                            <div class="row">
+                                <div class="input-group" style="flex: 1;"><label>Preço</label><input type="number" step="0.01" id="prod-price" class="admin-input" required></div>
+                                <div class="input-group" style="flex: 1;"><label>Categoria</label><select id="prod-cat" class="admin-select" required></select></div>
+                            </div>
+                            <div class="input-group"><label>Time</label><input type="text" id="prod-team" class="admin-input" required></div>
+                            <div class="input-group"><label>Galeria (1ª é capa)</label><div id="media-wrapper"><div class="media-row"><input type="text" class="admin-input media-input" placeholder="URL Imagem" oninput="updatePreview()" required></div></div><button type="button" class="btn-add-media" onclick="addMediaField()">+ Foto</button></div>
+                            <div class="input-group"><label>Vídeo (Opcional)</label><input type="text" id="prod-video" class="admin-input"></div>
+                            <div class="input-group"><label>Descrição</label><textarea id="prod-desc" class="admin-textarea" rows="4"></textarea></div>
+                            <label class="checkbox-wrapper"><input type="checkbox" id="prod-highlight"><span>Destaque?</span></label>
+                            <button type="submit" class="btn-cta">SALVAR</button>
+                        </form>
+                    </div>
+                    <div class="admin-preview-col">
+                        <span style="color:#666; margin-bottom:10px;">PREVIEW</span>
+                        <div class="product-card" style="width: 250px; pointer-events: none;">
+                            <div class="product-image"><img src="" id="prev-img" style="background:#333;"></div>
+                            <div class="product-info"><div class="product-name" id="prev-name">Nome</div><div class="product-price" id="prev-price">R$ 0,00</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="admin-product-list" style="margin-top: 30px;"></div>
+            </div>
+
+            <div id="sec-banner" class="content-section">
+                <div class="admin-header"><h2>BANNER PRINCIPAL (HERO)</h2></div>
+                <div class="admin-wrapper" style="grid-template-columns: 1fr;">
+                    <div class="admin-form-col">
+                        <p style="color: #888; margin-bottom: 20px;">Cole o link da imagem que vai aparecer no topo do site (Início).</p>
+                        <form id="banner-form">
+                            <div class="input-group">
+                                <label>URL da Imagem de Fundo</label>
+                                <input type="text" id="banner-img-url" class="admin-input" placeholder="https://..." required>
+                            </div>
+                            <button type="submit" class="btn-cta">ATUALIZAR BANNER</button>
+                        </form>
+                        
+                        <h3 style="margin-top: 30px; color: white;">Como está agora:</h3>
+                        <div id="banner-preview" style="width: 100%; height: 300px; background-color: #333; background-size: cover; background-position: center; border-radius: 10px; margin-top: 10px; border: 1px solid #555;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-categories" class="content-section">
+                <div class="admin-header"><h2>CATEGORIAS</h2></div>
+                <div class="admin-wrapper" style="grid-template-columns: 1fr; max-width: 600px;">
+                    <form id="add-cat-form" style="display: flex; gap: 10px;">
+                        <input type="text" id="cat-name" class="admin-input" placeholder="Nome" required>
+                        <input type="text" id="cat-slug" class="admin-input" placeholder="Slug" required>
+                        <button type="submit" class="btn-cta">ADD</button>
+                    </form>
+                    <div id="categories-list" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+
+            <div id="sec-dashboard" class="content-section">
+                <div class="admin-header"><h2>MÉTRICAS</h2></div>
+                <div class="stats-grid">
+                    <div class="stat-card yellow-accent"><h3>Total Produtos</h3><div class="value" id="stat-total-products">0</div><i class="fas fa-tshirt"></i></div>
+                    <div class="stat-card"><h3>Visualizações</h3><div class="value" id="stat-total-views">0</div><i class="fas fa-eye"></i></div>
+                </div>
+                <h3 style="color: var(--primary-yellow); font-family: 'Barlow Condensed'; margin-bottom: 15px;">MAIS ACESSADOS</h3>
+                <div id="top-products-list" style="background: #141414; border-radius: 10px; padding: 20px; border: 1px solid #333;"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="module">
+        import { auth, db, signInWithEmailAndPassword, onAuthStateChanged, signOut, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, setDoc, getDoc } from './firebase-config.js';
+
+        const loginScreen = document.getElementById('login-screen');
+        const adminPanel = document.getElementById('admin-panel');
+        
+        window.addMediaField = () => {
+            const w = document.getElementById('media-wrapper');
+            const d = document.createElement('div'); d.className = 'media-row';
+            d.innerHTML = `<input type="text" class="admin-input media-input" placeholder="URL Foto" oninput="updatePreview()"><button type="button" class="btn-remove-media" onclick="this.parentElement.remove();updatePreview()"><i class="fas fa-trash"></i></button>`;
+            w.appendChild(d);
+        };
+
+        window.showSection = (secId, btn) => {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('sec-' + secId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            if(secId === 'dashboard') loadStats();
+            if(secId === 'banner') loadBannerConfig(); // Carrega banner ao abrir aba
+        };
+
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            try { await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value); } catch (e) { alert("Erro: " + e.message); }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) { 
+                gsap.to(loginScreen, {opacity: 0, duration: 0.5, onComplete: () => {
+                    loginScreen.style.display = 'none'; 
+                    adminPanel.classList.remove('hidden'); 
+                    initAdmin(); 
+                }});
+            } else { 
+                loginScreen.style.display = 'flex'; 
+                loginScreen.style.opacity = 1;
+                adminPanel.classList.add('hidden'); 
+            }
+        });
+
+        async function initAdmin() { await loadCategories(); loadProducts(); loadStats(); loadBannerConfig(); }
+
+        // --- LÓGICA DO BANNER ---
+        async function loadBannerConfig() {
+            try {
+                const docSnap = await getDoc(doc(db, "site_config", "hero"));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('banner-img-url').value = data.img;
+                    document.getElementById('banner-preview').style.backgroundImage = `url('${data.img}')`;
+                }
+            } catch (e) { console.log("Sem banner configurado"); }
+        }
+
+        document.getElementById('banner-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const imgUrl = document.getElementById('banner-img-url').value;
+            // Salva na coleção 'site_config', documento 'hero'
+            await setDoc(doc(db, "site_config", "hero"), { img: imgUrl }, { merge: true });
+            alert("Banner Atualizado! Atualize a página do site para ver.");
+            loadBannerConfig();
+        });
+        // -------------------------
+
+        // --- PREVIEW ---
+        const inputs = { name: document.getElementById('prod-name'), price: document.getElementById('prod-price'), cat: document.getElementById('prod-cat') };
+        window.updatePreview = () => {
+            document.getElementById('prev-name').innerText = inputs.name.value || "Nome";
+            document.getElementById('prev-price').innerText = `R$ ${parseFloat(inputs.price.value || 0).toFixed(2)}`;
+            const firstImg = document.querySelector('.media-input').value;
+            if(firstImg.length > 5) document.getElementById('prev-img').src = firstImg;
+        };
+        Object.keys(inputs).forEach(key => inputs[key].addEventListener('input', updatePreview));
+
+        document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]'); btn.innerHTML = "SALVANDO..."; btn.disabled = true;
+            const mediaInputs = document.querySelectorAll('.media-input');
+            const imgArray = Array.from(mediaInputs).map(input => input.value).filter(val => val.trim() !== '');
+            try {
+                await addDoc(collection(db, "produtos"), {
+                    nome: inputs.name.value, preco: parseFloat(inputs.price.value), categoria: inputs.cat.value,
+                    time: document.getElementById('prod-team').value.toLowerCase(), img: imgArray.length > 0 ? imgArray : ["https://via.placeholder.com/300"], 
+                    video: document.getElementById('prod-video').value, descricao: document.getElementById('prod-desc').value,
+                    destaque: document.getElementById('prod-highlight').checked, views: 0, dataCriacao: new Date()
+                });
+                alert("Salvo!"); e.target.reset(); document.getElementById('media-wrapper').innerHTML = '<div class="media-row"><input type="text" class="admin-input media-input" placeholder="URL Foto" oninput="updatePreview()" required></div>';
+                updatePreview(); loadProducts(); btn.innerHTML = 'SALVAR'; btn.disabled = false;
+            } catch (err) { alert("Erro"); btn.disabled = false; }
+        });
+
+        async function loadCategories() {
+            const catSelect = document.getElementById('prod-cat');
+            const catList = document.getElementById('categories-list');
+            const snap = await getDocs(collection(db, "categorias"));
+            catSelect.innerHTML = '<option value="">Selecione...</option>'; catList.innerHTML = '';
+            snap.forEach(doc => {
+                const c = doc.data();
+                catSelect.innerHTML += `<option value="${c.slug}">${c.nome}</option>`;
+                catList.innerHTML += `<div class="cat-list-item"><span>${c.nome}</span><i class="fas fa-trash delete-icon" onclick="delCat('${doc.id}')"></i></div>`;
+            });
+        }
+
+        async function loadProducts() {
+            const list = document.getElementById('admin-product-list'); list.innerHTML = 'Carregando...';
+            const snap = await getDocs(query(collection(db, "produtos"), orderBy('dataCriacao', 'desc'))); list.innerHTML = '';
+            snap.forEach(d => {
+                const p = d.data(); const thumb = Array.isArray(p.img) ? p.img[0] : p.img;
+                list.innerHTML += `<div class="cat-list-item"><div style="display:flex; gap:10px; align-items:center;"><img src="${thumb}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;"><div>${p.nome}<br><small>R$ ${p.preco}</small></div></div><i class="fas fa-trash delete-icon" onclick="delProd('${d.id}')"></i></div>`;
+            });
+        }
+
+        async function loadStats() {
+            const prodSnap = await getDocs(collection(db, "produtos"));
+            document.getElementById('stat-total-products').innerText = prodSnap.size;
+            let totalViews = 0, products = [];
+            prodSnap.forEach(doc => { const p = doc.data(); totalViews += (p.views||0); products.push({...p, id:doc.id, views:p.views||0}); });
+            document.getElementById('stat-total-views').innerText = totalViews;
+            products.sort((a, b) => b.views - a.views);
+            const thumb = (p) => Array.isArray(p.img) ? p.img[0] : p.img;
+            document.getElementById('top-products-list').innerHTML = products.slice(0, 5).map((p, i) => `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333;"><div style="display:flex; gap:10px; align-items:center;"><span style="color:var(--primary-yellow); font-weight:bold;">#${i+1}</span><img src="${thumb(p)}" style="width:30px;height:30px;object-fit:cover;"><span>${p.nome}</span></div><span style="color:#888;">${p.views} views</span></div>`).join('');
+        }
+
+        document.getElementById('add-cat-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); await addDoc(collection(db, "categorias"), { nome: document.getElementById('cat-name').value, slug: document.getElementById('cat-slug').value.toLowerCase() }); e.target.reset(); loadCategories();
+        });
+
+        window.delCat = async (id) => { if(confirm('Apagar?')) { await deleteDoc(doc(db, "categorias", id)); loadCategories(); } }
+        window.delProd = async (id) => { if(confirm('Apagar?')) { await deleteDoc(doc(db, "produtos", id)); loadProducts(); } }
+        window.logout = () => signOut(auth).then(()=>location.reload());
+    </script>
+</body>
+</html>
