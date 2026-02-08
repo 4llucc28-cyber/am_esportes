@@ -3,245 +3,476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | AM Esportes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>CEO DASHBOARD | AM Esportes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="admin-body">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #ffc200;
+            --bg-dark: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --text-gray: #888;
+            --danger: #ff3b30;
+            --success: #00a650;
+        }
 
-    <div id="login-screen" class="login-container">
-        <div class="login-box">
-            <i class="fas fa-shield-halved" style="font-size: 3rem; color: var(--primary-yellow); margin-bottom: 20px;"></i>
-            <h2 style="color: white; font-family: 'Barlow Condensed'; margin-bottom: 20px;">ADMINISTRADOR</h2>
-            <input type="email" id="email" placeholder="E-mail" class="admin-input" style="margin-bottom: 10px;">
-            <input type="password" id="password" placeholder="Senha" class="admin-input" style="margin-bottom: 20px;">
-            <button id="btn-login" class="btn-cta" style="width:100%;">ENTRAR</button>
-        </div>
-    </div>
-
-    <div id="admin-panel" class="hidden" style="width: 100%; display: flex;">
-        <nav class="admin-sidebar">
-            <div class="admin-logo">AM ESPORTES<br><span style="font-size: 0.8rem; color: #666;">PAINEL 2.0</span></div>
-            <div class="nav-item active" onclick="showSection('products', this)"><i class="fas fa-tshirt"></i> Catálogo</div>
-            <div class="nav-item" onclick="showSection('categories', this)"><i class="fas fa-tags"></i> Categorias</div>
-            <div class="nav-item" onclick="showSection('banner', this)"><i class="fas fa-image"></i> Banner Principal</div>
-            <div class="nav-item" onclick="showSection('dashboard', this)"><i class="fas fa-chart-line"></i> Métricas</div>
-            
-            <div class="sidebar-footer">
-                <div class="nav-item" onclick="logout()" style="color: #ff4444; border: 1px solid #ff444433;">
-                    <i class="fas fa-sign-out-alt"></i> Sair
-                </div>
-            </div>
-        </nav>
-
-        <main class="admin-main">
-            
-            <div id="sec-products" class="content-section active">
-                <div class="admin-header"><h2>GERENCIAR PRODUTOS</h2></div>
-                <div class="admin-wrapper">
-                    <div class="admin-form-col">
-                        <h3>NOVO PRODUTO</h3>
-                        <form id="add-product-form">
-                            <div class="input-group"><label>Nome</label><input type="text" id="prod-name" class="admin-input" required></div>
-                            <div class="row">
-                                <div class="input-group" style="flex: 1;"><label>Preço</label><input type="number" step="0.01" id="prod-price" class="admin-input" required></div>
-                                <div class="input-group" style="flex: 1;"><label>Categoria</label><select id="prod-cat" class="admin-select" required></select></div>
-                            </div>
-                            <div class="input-group"><label>Time</label><input type="text" id="prod-team" class="admin-input" required></div>
-                            <div class="input-group"><label>Galeria (1ª é capa)</label><div id="media-wrapper"><div class="media-row"><input type="text" class="admin-input media-input" placeholder="URL Imagem" oninput="updatePreview()" required></div></div><button type="button" class="btn-add-media" onclick="addMediaField()">+ Foto</button></div>
-                            <div class="input-group"><label>Vídeo (Opcional)</label><input type="text" id="prod-video" class="admin-input"></div>
-                            <div class="input-group"><label>Descrição</label><textarea id="prod-desc" class="admin-textarea" rows="4"></textarea></div>
-                            <label class="checkbox-wrapper"><input type="checkbox" id="prod-highlight"><span>Destaque?</span></label>
-                            <button type="submit" class="btn-cta">SALVAR</button>
-                        </form>
-                    </div>
-                    <div class="admin-preview-col">
-                        <span style="color:#666; margin-bottom:10px;">PREVIEW</span>
-                        <div class="product-card" style="width: 250px; pointer-events: none;">
-                            <div class="product-image"><img src="" id="prev-img" style="background:#333;"></div>
-                            <div class="product-info"><div class="product-name" id="prev-name">Nome</div><div class="product-price" id="prev-price">R$ 0,00</div></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="admin-product-list" style="margin-top: 30px;"></div>
-            </div>
-
-            <div id="sec-banner" class="content-section">
-                <div class="admin-header"><h2>BANNER PRINCIPAL (HERO)</h2></div>
-                <div class="admin-wrapper" style="grid-template-columns: 1fr;">
-                    <div class="admin-form-col">
-                        <p style="color: #888; margin-bottom: 20px;">Cole o link da imagem que vai aparecer no topo do site (Início).</p>
-                        <form id="banner-form">
-                            <div class="input-group">
-                                <label>URL da Imagem de Fundo</label>
-                                <input type="text" id="banner-img-url" class="admin-input" placeholder="https://..." required>
-                            </div>
-                            <button type="submit" class="btn-cta">ATUALIZAR BANNER</button>
-                        </form>
-                        
-                        <h3 style="margin-top: 30px; color: white;">Como está agora:</h3>
-                        <div id="banner-preview" style="width: 100%; height: 300px; background-color: #333; background-size: cover; background-position: center; border-radius: 10px; margin-top: 10px; border: 1px solid #555;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="sec-categories" class="content-section">
-                <div class="admin-header"><h2>CATEGORIAS</h2></div>
-                <div class="admin-wrapper" style="grid-template-columns: 1fr; max-width: 600px;">
-                    <form id="add-cat-form" style="display: flex; gap: 10px;">
-                        <input type="text" id="cat-name" class="admin-input" placeholder="Nome" required>
-                        <input type="text" id="cat-slug" class="admin-input" placeholder="Slug" required>
-                        <button type="submit" class="btn-cta">ADD</button>
-                    </form>
-                    <div id="categories-list" style="margin-top: 20px;"></div>
-                </div>
-            </div>
-
-            <div id="sec-dashboard" class="content-section">
-                <div class="admin-header"><h2>MÉTRICAS</h2></div>
-                <div class="stats-grid">
-                    <div class="stat-card yellow-accent"><h3>Total Produtos</h3><div class="value" id="stat-total-products">0</div><i class="fas fa-tshirt"></i></div>
-                    <div class="stat-card"><h3>Visualizações</h3><div class="value" id="stat-total-views">0</div><i class="fas fa-eye"></i></div>
-                </div>
-                <h3 style="color: var(--primary-yellow); font-family: 'Barlow Condensed'; margin-bottom: 15px;">MAIS ACESSADOS</h3>
-                <div id="top-products-list" style="background: #141414; border-radius: 10px; padding: 20px; border: 1px solid #333;"></div>
-            </div>
-
-        </main>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script type="module">
-        import { auth, db, signInWithEmailAndPassword, onAuthStateChanged, signOut, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, setDoc, getDoc } from './firebase-config.js';
-
-        const loginScreen = document.getElementById('login-screen');
-        const adminPanel = document.getElementById('admin-panel');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        window.addMediaField = () => {
-            const w = document.getElementById('media-wrapper');
-            const d = document.createElement('div'); d.className = 'media-row';
-            d.innerHTML = `<input type="text" class="admin-input media-input" placeholder="URL Foto" oninput="updatePreview()"><button type="button" class="btn-remove-media" onclick="this.parentElement.remove();updatePreview()"><i class="fas fa-trash"></i></button>`;
-            w.appendChild(d);
-        };
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: white;
+            display: flex;
+            height: 100vh; /* Trava a altura da tela */
+            overflow: hidden; 
+        }
 
-        window.showSection = (secId, btn) => {
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('sec-' + secId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            btn.classList.add('active');
-            if(secId === 'dashboard') loadStats();
-            if(secId === 'banner') loadBannerConfig(); // Carrega banner ao abrir aba
-        };
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: #111;
+            border-right: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .logo {
+            font-family: 'Barlow Condensed';
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .menu-item {
+            padding: 15px;
+            margin-bottom: 8px;
+            color: #666;
+            cursor: pointer;
+            border-radius: 10px;
+            display: flex; align-items: center; gap: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255, 194, 0, 0.1);
+            color: var(--primary);
+        }
+        
+        .logout-btn {
+            margin-top: auto;
+            color: var(--danger);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+        }
+        .logout-btn:hover { background: rgba(255, 59, 48, 0.1); color: var(--danger); }
 
-        document.getElementById('btn-login').addEventListener('click', async () => {
-            try { await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value); } catch (e) { alert("Erro: " + e.message); }
-        });
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto; /* Scroll só aqui dentro */
+            position: relative;
+            height: 100%;
+        }
 
+        /* HEADER */
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-title h1 { font-family: 'Barlow Condensed'; font-size: 2.5rem; }
+        .page-title p { color: #666; font-size: 0.9rem; }
+        .date-display { 
+            background: #222; padding: 10px 20px; border-radius: 30px; 
+            font-size: 0.9rem; color: #aaa; border: 1px solid #333;
+        }
+
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px; margin-bottom: 30px;
+        }
+        .kpi-card {
+            background: var(--bg-card); padding: 25px; border-radius: 16px;
+            border: 1px solid #333; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: space-between;
+            height: 140px;
+        }
+        .kpi-value { font-size: 2.2rem; font-weight: 700; color: white; font-family: 'Barlow Condensed'; }
+        .kpi-trend { font-size: 0.8rem; margin-top: 5px; }
+        .trend-up { color: var(--success); }
+
+        /* CHARTS FIX (CORREÇÃO DO BUG INFINITO) */
+        .charts-row {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 30px;
+            /* Remove altura fixa do grid para evitar conflito */
+        }
+        .chart-box {
+            background: var(--bg-card); border-radius: 16px; border: 1px solid #333;
+            padding: 25px; position: relative;
+            display: flex; flex-direction: column;
+        }
+        .chart-container-wrapper {
+            position: relative;
+            height: 300px; /* Altura fixa PARA O GRÁFICO */
+            width: 100%;
+        }
+        
+        /* TOP PRODUCTS */
+        .top-products-list { overflow-y: auto; max-height: 300px; padding-right: 5px; }
+        .top-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px solid #333;
+        }
+        .top-item img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; background: #333; }
+        .top-item-views { font-family: 'Barlow Condensed'; font-size: 1.2rem; color: var(--primary); font-weight: bold; }
+
+        /* FORMS & INPUTS */
+        .admin-form { display: grid; gap: 20px; max-width: 800px; }
+        .input-group label { display: block; color: var(--text-gray); margin-bottom: 8px; font-size: 0.9rem; }
+        input, select, textarea {
+            width: 100%; background: #0a0a0a; border: 1px solid #333; color: white;
+            padding: 15px; border-radius: 8px; outline: none; transition: 0.3s;
+            font-family: 'Inter';
+        }
+        input:focus { border-color: var(--primary); }
+        
+        .btn-primary {
+            background: var(--primary); color: #000; border: none; padding: 15px 30px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s;
+            font-family: 'Barlow Condensed'; font-size: 1.2rem; text-transform: uppercase;
+            width: fit-content; display: flex; align-items: center; gap: 10px;
+        }
+        
+        /* ESTILO PARA MÚLTIPLAS FOTOS */
+        .url-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .btn-add-foto {
+            background: transparent; border: 1px dashed #444; color: var(--primary);
+            padding: 10px; width: 100%; cursor: pointer; border-radius: 8px;
+            font-weight: bold; text-transform: uppercase; font-size: 0.8rem;
+        }
+        .btn-add-foto:hover { background: rgba(255,194,0,0.05); border-color: var(--primary); }
+        .btn-remove-foto {
+            background: #222; color: var(--danger); border: 1px solid #333;
+            width: 50px; cursor: pointer; border-radius: 8px;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1024px) {
+            body { flex-direction: column; overflow: auto; height: auto; }
+            .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 10px; height: auto; }
+            .charts-row { grid-template-columns: 1fr; }
+            .menu-item span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo"><i class="fas fa-shield-halved"></i> <span>AM ADMIN</span></div>
+        <div class="menu-item active" onclick="switchTab('dashboard', this)"><i class="fas fa-chart-line"></i> <span>Visão Geral</span></div>
+        <div class="menu-item" onclick="switchTab('produtos', this)"><i class="fas fa-tshirt"></i> <span>Produtos</span></div>
+        <div class="menu-item" onclick="switchTab('config', this)"><i class="fas fa-cog"></i> <span>Configurações</span></div>
+        <div class="menu-item logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> <span>Sair</span></div>
+    </nav>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-title"><h1 id="page-title-text">DASHBOARD</h1><p>Painel de Controle Oficial</p></div>
+            <div class="date-display" id="current-date">DATA</div>
+        </header>
+
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-views">0</div>
+                    <div class="kpi-trend trend-up">Visualizações Totais</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-products">0</div>
+                    <div class="kpi-trend">Produtos em Estoque</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color:var(--primary);">ON</div>
+                    <div class="kpi-trend trend-up">Sistema Operante</div>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-box">
+                    <div class="chart-header" style="margin-bottom:20px;"><h3>Acessos da Semana</h3></div>
+                    <div class="chart-container-wrapper">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-box">
+                    <div class="chart-header" style="margin-bottom:20px;"><h3>Top Produtos</h3></div>
+                    <div class="top-products-list" id="top-products-dash"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-produtos" class="tab-content">
+            <div style="background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #333; margin-bottom: 30px;">
+                <h3 style="margin-bottom: 20px; color: var(--primary);">NOVO DROP</h3>
+                <form id="form-produto" class="admin-form">
+                    <div class="input-group"><label>Nome</label><input type="text" id="prod-nome" required></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="input-group"><label>Preço (R$)</label><input type="number" step="0.01" id="prod-preco" required></div>
+                        <div class="input-group"><label>Categoria</label><select id="prod-categoria" required><option value="">Carregando...</option></select></div>
+                    </div>
+                    <div class="input-group"><label>Time / Marca</label><input type="text" id="prod-time" required></div>
+                    
+                    <div class="input-group">
+                        <label>Galeria de Imagens</label>
+                        <div id="images-container">
+                            <div class="url-row">
+                                <input type="text" class="prod-img-input" placeholder="URL da Foto 1 (Capa)" required>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-foto" onclick="addPhotoField()">+ Adicionar outra foto</button>
+                    </div>
+
+                    <div class="input-group"><label>Descrição</label><textarea id="prod-desc" rows="3"></textarea></div>
+                    <button type="submit" class="btn-primary">SALVAR PRODUTO</button>
+                </form>
+            </div>
+
+            <h3 style="margin-bottom: 15px;">ESTOQUE</h3>
+            <div id="lista-produtos" style="display: grid; gap: 10px;"></div>
+        </div>
+
+        <div id="tab-config" class="tab-content">
+            <div style="max-width: 600px; background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #333;">
+                <h3 style="color: var(--primary); margin-bottom: 25px;">SISTEMA</h3>
+                <div class="input-group" style="margin-bottom: 20px;"><label>Banner (URL)</label><input type="text" id="cfg-banner"></div>
+                <div class="input-group" style="margin-bottom: 20px;"><label>WhatsApp (DDD+Num)</label><input type="text" id="cfg-whatsapp"></div>
+                <div class="input-group" style="margin-bottom: 20px;"><label>E-mail</label><input type="email" id="cfg-email"></div>
+                <button onclick="salvarConfig()" class="btn-primary" style="width: 100%; justify-content: center;">ATUALIZAR</button>
+                
+                <hr style="border:0; border-top:1px solid #333; margin:30px 0;">
+                
+                <h4 style="color: white; margin-bottom: 10px;">Nova Categoria</h4>
+                <form id="form-categoria" style="display: flex; gap: 10px;">
+                    <input type="text" id="cat-nome" placeholder="Nome" required style="flex: 2;">
+                    <input type="text" id="cat-slug" placeholder="slug" required style="flex: 1;">
+                    <button type="submit" class="btn-primary" style="padding: 0 20px;">OK</button>
+                </form>
+                <div id="lista-categorias" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { auth, db, onAuthStateChanged, signOut, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, setDoc, getDoc } from './firebase-config.js';
+
+        const EMAIL_ADMIN = "admin@amesportes.com";
+
+        // VERIFICAÇÃO DE SEGURANÇA
         onAuthStateChanged(auth, (user) => {
-            if (user) { 
-                gsap.to(loginScreen, {opacity: 0, duration: 0.5, onComplete: () => {
-                    loginScreen.style.display = 'none'; 
-                    adminPanel.classList.remove('hidden'); 
-                    initAdmin(); 
-                }});
-            } else { 
-                loginScreen.style.display = 'flex'; 
-                loginScreen.style.opacity = 1;
-                adminPanel.classList.add('hidden'); 
+            if (user && user.email === EMAIL_ADMIN) {
+                initDashboard();
+            } else {
+                document.body.innerHTML = '<div style="height:100vh; display:flex; justify-content:center; align-items:center; color:white; flex-direction:column;"><h1>ACESSO RESTRITO</h1><a href="index.html" style="color:#ffc200; margin-top:20px;">Voltar</a></div>';
             }
         });
 
-        async function initAdmin() { await loadCategories(); loadProducts(); loadStats(); loadBannerConfig(); }
+        async function initDashboard() {
+            const d = new Date();
+            const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+            document.getElementById('current-date').innerText = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+            await loadConfigs();
+            await loadData();
+            initChart();
+        }
 
-        // --- LÓGICA DO BANNER ---
-        async function loadBannerConfig() {
+        // --- SISTEMA DE FOTOS MÚLTIPLAS ---
+        window.addPhotoField = () => {
+            const container = document.getElementById('images-container');
+            const div = document.createElement('div');
+            div.className = 'url-row';
+            div.innerHTML = `
+                <input type="text" class="prod-img-input" placeholder="URL da Foto Extra">
+                <button type="button" class="btn-remove-foto" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
+        async function loadData() {
+            // CATEGORIAS
+            const catSnap = await getDocs(collection(db, "categorias"));
+            const catSelect = document.getElementById('prod-categoria');
+            const catList = document.getElementById('lista-categorias');
+            catSelect.innerHTML = '<option value="">Selecione...</option>';
+            catList.innerHTML = '';
+            catSnap.forEach(d => {
+                const c = d.data();
+                catSelect.innerHTML += `<option value="${c.slug}">${c.nome}</option>`;
+                catList.innerHTML += `<span style="background:#333; padding:5px 10px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:5px;">${c.nome} <i class="fas fa-times" style="cursor:pointer; color:red;" onclick="window.delCat('${d.id}')"></i></span>`;
+            });
+
+            // PRODUTOS
+            const prodSnap = await getDocs(query(collection(db, "produtos"), orderBy("dataCriacao", "desc")));
+            const listEl = document.getElementById('lista-produtos');
+            const listTop = document.getElementById('top-products-dash');
+            listEl.innerHTML = ''; listTop.innerHTML = '';
+            
+            let products = [];
+            let totalViews = 0;
+
+            prodSnap.forEach(d => {
+                const p = d.data();
+                const thumb = Array.isArray(p.img) ? p.img[0] : p.img; // Pega a primeira foto
+                products.push({...p, id: d.id, thumb});
+                totalViews += (p.views || 0);
+
+                listEl.innerHTML += `
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--primary);">
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <img src="${thumb}" style="width:50px; height:50px; object-fit:cover; border-radius:6px; background:#333;">
+                            <div><div style="font-weight:bold;">${p.nome}</div><div style="font-size:0.8rem; color:#888;">${p.categoria} | R$ ${p.preco}</div></div>
+                        </div>
+                        <div style="display:flex; gap:15px; align-items:center;">
+                            <span style="font-size:0.9rem; color:#aaa;"><i class="fas fa-eye"></i> ${p.views || 0}</span>
+                            <button onclick="window.delProd('${d.id}')" style="background:none; border:none; color:var(--danger); cursor:pointer;"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+
+            // TOP 5
+            products.sort((a, b) => (b.views || 0) - (a.views || 0));
+            products.slice(0, 5).forEach(p => {
+                listTop.innerHTML += `
+                    <div class="top-item">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img src="${p.thumb}">
+                            <div><div style="font-weight:600; font-size:0.9rem;">${p.nome.substring(0, 20)}...</div><small style="color:#666;">${p.time || '-'}</small></div>
+                        </div>
+                        <div class="top-item-views">${p.views || 0}</div>
+                    </div>`;
+            });
+
+            document.getElementById('kpi-products').innerText = products.length;
+            document.getElementById('kpi-views').innerText = totalViews;
+        }
+
+        // SALVAR PRODUTO COM MULTIPLAS FOTOS
+        document.getElementById('form-produto').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = "Salvando..."; btn.disabled = true;
+
             try {
-                const docSnap = await getDoc(doc(db, "site_config", "hero"));
+                // Coleta todas as URLs dos inputs
+                const imgInputs = document.querySelectorAll('.prod-img-input');
+                const images = Array.from(imgInputs).map(input => input.value).filter(val => val.trim() !== "");
+
+                await addDoc(collection(db, "produtos"), {
+                    nome: document.getElementById('prod-nome').value,
+                    preco: parseFloat(document.getElementById('prod-preco').value),
+                    categoria: document.getElementById('prod-categoria').value,
+                    time: document.getElementById('prod-time').value,
+                    img: images, // Salva o Array de fotos
+                    descricao: document.getElementById('prod-desc').value,
+                    dataCriacao: new Date(),
+                    views: 0
+                });
+                alert("Produto Publicado!");
+                e.target.reset();
+                // Reseta o campo de imagens para ter só 1 input
+                document.getElementById('images-container').innerHTML = '<div class="url-row"><input type="text" class="prod-img-input" placeholder="URL da Foto 1 (Capa)" required></div>';
+                loadData();
+            } catch(err) { alert(err.message); }
+            btn.innerHTML = "SALVAR PRODUTO"; btn.disabled = false;
+        });
+
+        // OUTRAS FUNÇÕES
+        async function loadConfigs() {
+            try {
+                const docSnap = await getDoc(doc(db, "site_config", "geral"));
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    document.getElementById('banner-img-url').value = data.img;
-                    document.getElementById('banner-preview').style.backgroundImage = `url('${data.img}')`;
+                    if(data.banner) document.getElementById('cfg-banner').value = data.banner;
+                    if(data.whatsapp) document.getElementById('cfg-whatsapp').value = data.whatsapp;
+                    if(data.email) document.getElementById('cfg-email').value = data.email;
                 }
-            } catch (e) { console.log("Sem banner configurado"); }
+            } catch(e) {}
         }
 
-        document.getElementById('banner-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const imgUrl = document.getElementById('banner-img-url').value;
-            // Salva na coleção 'site_config', documento 'hero'
-            await setDoc(doc(db, "site_config", "hero"), { img: imgUrl }, { merge: true });
-            alert("Banner Atualizado! Atualize a página do site para ver.");
-            loadBannerConfig();
-        });
-        // -------------------------
+        window.salvarConfig = async () => {
+            const banner = document.getElementById('cfg-banner').value;
+            const whatsapp = document.getElementById('cfg-whatsapp').value;
+            const email = document.getElementById('cfg-email').value;
+            if(banner) await setDoc(doc(db, "site_config", "hero"), { img: banner }, { merge: true });
+            await setDoc(doc(db, "site_config", "geral"), { banner, whatsapp, email }, { merge: true });
+            alert("Configurações Salvas!");
+        }
 
-        // --- PREVIEW ---
-        const inputs = { name: document.getElementById('prod-name'), price: document.getElementById('prod-price'), cat: document.getElementById('prod-cat') };
-        window.updatePreview = () => {
-            document.getElementById('prev-name').innerText = inputs.name.value || "Nome";
-            document.getElementById('prev-price').innerText = `R$ ${parseFloat(inputs.price.value || 0).toFixed(2)}`;
-            const firstImg = document.querySelector('.media-input').value;
-            if(firstImg.length > 5) document.getElementById('prev-img').src = firstImg;
-        };
-        Object.keys(inputs).forEach(key => inputs[key].addEventListener('input', updatePreview));
-
-        document.getElementById('add-product-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]'); btn.innerHTML = "SALVANDO..."; btn.disabled = true;
-            const mediaInputs = document.querySelectorAll('.media-input');
-            const imgArray = Array.from(mediaInputs).map(input => input.value).filter(val => val.trim() !== '');
-            try {
-                await addDoc(collection(db, "produtos"), {
-                    nome: inputs.name.value, preco: parseFloat(inputs.price.value), categoria: inputs.cat.value,
-                    time: document.getElementById('prod-team').value.toLowerCase(), img: imgArray.length > 0 ? imgArray : ["https://via.placeholder.com/300"], 
-                    video: document.getElementById('prod-video').value, descricao: document.getElementById('prod-desc').value,
-                    destaque: document.getElementById('prod-highlight').checked, views: 0, dataCriacao: new Date()
-                });
-                alert("Salvo!"); e.target.reset(); document.getElementById('media-wrapper').innerHTML = '<div class="media-row"><input type="text" class="admin-input media-input" placeholder="URL Foto" oninput="updatePreview()" required></div>';
-                updatePreview(); loadProducts(); btn.innerHTML = 'SALVAR'; btn.disabled = false;
-            } catch (err) { alert("Erro"); btn.disabled = false; }
-        });
-
-        async function loadCategories() {
-            const catSelect = document.getElementById('prod-cat');
-            const catList = document.getElementById('categories-list');
-            const snap = await getDocs(collection(db, "categorias"));
-            catSelect.innerHTML = '<option value="">Selecione...</option>'; catList.innerHTML = '';
-            snap.forEach(doc => {
-                const c = doc.data();
-                catSelect.innerHTML += `<option value="${c.slug}">${c.nome}</option>`;
-                catList.innerHTML += `<div class="cat-list-item"><span>${c.nome}</span><i class="fas fa-trash delete-icon" onclick="delCat('${doc.id}')"></i></div>`;
+        // CHART CONFIG (FIXADO)
+        function initChart() {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            // Destroi gráfico anterior se existir pra não bugar
+            if(window.myChart) window.myChart.destroy();
+            
+            window.myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    datasets: [{
+                        label: 'Acessos',
+                        data: [150, 230, 180, 320, 450, 500, 420], // Dados Mockados
+                        borderColor: '#ffc200',
+                        backgroundColor: 'rgba(255, 194, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Importante pra respeitar a altura do pai
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#333' }, ticks: { color: '#888' } },
+                        x: { grid: { display: false }, ticks: { color: '#888' } }
+                    }
+                }
             });
         }
 
-        async function loadProducts() {
-            const list = document.getElementById('admin-product-list'); list.innerHTML = 'Carregando...';
-            const snap = await getDocs(query(collection(db, "produtos"), orderBy('dataCriacao', 'desc'))); list.innerHTML = '';
-            snap.forEach(d => {
-                const p = d.data(); const thumb = Array.isArray(p.img) ? p.img[0] : p.img;
-                list.innerHTML += `<div class="cat-list-item"><div style="display:flex; gap:10px; align-items:center;"><img src="${thumb}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;"><div>${p.nome}<br><small>R$ ${p.preco}</small></div></div><i class="fas fa-trash delete-icon" onclick="delProd('${d.id}')"></i></div>`;
+        document.getElementById('form-categoria').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await addDoc(collection(db, "categorias"), { 
+                nome: document.getElementById('cat-nome').value, 
+                slug: document.getElementById('cat-slug').value.toLowerCase() 
             });
-        }
-
-        async function loadStats() {
-            const prodSnap = await getDocs(collection(db, "produtos"));
-            document.getElementById('stat-total-products').innerText = prodSnap.size;
-            let totalViews = 0, products = [];
-            prodSnap.forEach(doc => { const p = doc.data(); totalViews += (p.views||0); products.push({...p, id:doc.id, views:p.views||0}); });
-            document.getElementById('stat-total-views').innerText = totalViews;
-            products.sort((a, b) => b.views - a.views);
-            const thumb = (p) => Array.isArray(p.img) ? p.img[0] : p.img;
-            document.getElementById('top-products-list').innerHTML = products.slice(0, 5).map((p, i) => `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333;"><div style="display:flex; gap:10px; align-items:center;"><span style="color:var(--primary-yellow); font-weight:bold;">#${i+1}</span><img src="${thumb(p)}" style="width:30px;height:30px;object-fit:cover;"><span>${p.nome}</span></div><span style="color:#888;">${p.views} views</span></div>`).join('');
-        }
-
-        document.getElementById('add-cat-form').addEventListener('submit', async (e) => {
-            e.preventDefault(); await addDoc(collection(db, "categorias"), { nome: document.getElementById('cat-name').value, slug: document.getElementById('cat-slug').value.toLowerCase() }); e.target.reset(); loadCategories();
+            alert("Categoria Adicionada");
+            e.target.reset();
+            loadData();
         });
 
-        window.delCat = async (id) => { if(confirm('Apagar?')) { await deleteDoc(doc(db, "categorias", id)); loadCategories(); } }
-        window.delProd = async (id) => { if(confirm('Apagar?')) { await deleteDoc(doc(db, "produtos", id)); loadProducts(); } }
+        window.delProd = async (id) => { if(confirm('Excluir?')) { await deleteDoc(doc(db, "produtos", id)); loadData(); } }
+        window.delCat = async (id) => { if(confirm('Excluir?')) { await deleteDoc(doc(db, "categorias", id)); loadData(); } }
         window.logout = () => signOut(auth).then(()=>location.reload());
+        
+        window.switchTab = (tabId, btn) => {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            const titles = { 'dashboard': 'DASHBOARD', 'produtos': 'GERENCIAR PRODUTOS', 'config': 'SISTEMA' };
+            document.getElementById('page-title-text').innerText = titles[tabId];
+        }
     </script>
 </body>
 </html>

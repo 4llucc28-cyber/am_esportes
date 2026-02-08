@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AM Esportes Store</title>
+    <title>AM Esportes | Store Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;1,900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="site-body">
 
+    <div id="toast-container"></div>
+
     <div id="medidas-modal" class="modal-overlay">
         <div class="modal-box" style="max-width: 600px; padding: 30px;">
             <i class="fas fa-times close-modal" onclick="closeModal('medidas-modal')"></i>
             <h2 style="font-family: 'Barlow Condensed'; font-weight: 800; margin-bottom: 20px;">TABELA DE MEDIDAS</h2>
-            <p>Confira as dimensões aproximadas das nossas camisas.</p>
-            <table class="size-table">
-                <thead><tr><th>TAMANHO</th><th>LARGURA (cm)</th><th>ALTURA (cm)</th></tr></thead>
+            <table class="size-table" style="width:100%; text-align:left; border-collapse:collapse;">
+                <thead style="background:#f4f4f4;"><tr><th style="padding:10px;">TAMANHO</th><th>LARGURA (cm)</th><th>ALTURA (cm)</th></tr></thead>
                 <tbody>
-                    <tr><td><strong>P</strong></td><td>50-52</td><td>69-71</td></tr>
-                    <tr><td><strong>M</strong></td><td>53-55</td><td>71-73</td></tr>
-                    <tr><td><strong>G</strong></td><td>56-58</td><td>73-75</td></tr>
-                    <tr><td><strong>GG</strong></td><td>59-61</td><td>75-77</td></tr>
-                    <tr><td><strong>XG</strong></td><td>62-64</td><td>77-79</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;"><strong>P</strong></td><td>50-52</td><td>69-71</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;"><strong>M</strong></td><td>53-55</td><td>71-73</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;"><strong>G</strong></td><td>56-58</td><td>73-75</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;"><strong>GG</strong></td><td>59-61</td><td>75-77</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;"><strong>XG</strong></td><td>62-64</td><td>77-79</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
-
+    
     <div id="quem-somos-modal" class="modal-overlay">
         <div class="modal-box" style="max-width: 600px; padding: 30px;">
             <i class="fas fa-times close-modal" onclick="closeModal('quem-somos-modal')"></i>
-            <h2 style="font-family: 'Barlow Condensed'; font-weight: 800;">QUEM SOMOS</h2>
-            <div class="text-content">
-                <p>Somos a <strong>AM Esportes</strong>, sua loja definitiva para artigos esportivos. Nascemos da paixão pelo futebol e pelo compromisso em entregar produtos de alta qualidade para torcedores exigentes.</p>
-                <p>Trabalhamos com fornecedores selecionados para garantir que cada camisa carregue a emoção do estádio para sua casa.</p>
+            <h2>QUEM SOMOS</h2>
+            <div class="text-content" style="padding: 20px 0; color: #555;">
+                <p>A <strong>AM Esportes</strong> nasceu da paixão pelo futebol. Garantimos qualidade premium para torcedores exigentes.</p>
             </div>
         </div>
     </div>
@@ -42,14 +42,10 @@
     <div id="politicas-modal" class="modal-overlay">
         <div class="modal-box" style="max-width: 600px; padding: 30px;">
             <i class="fas fa-times close-modal" onclick="closeModal('politicas-modal')"></i>
-            <h2 style="font-family: 'Barlow Condensed'; font-weight: 800;">POLÍTICAS E AJUDA</h2>
-            <div class="text-content">
-                <h3>Trocas e Devoluções</h3>
-                <p>Aceitamos trocas em até 7 dias corridos após o recebimento, desde que o produto mantenha a etiqueta original.</p>
-                <h3>Como Comprar</h3>
-                <p>1. Escolha o produto e tamanho.<br>2. Clique em "Comprar".<br>3. Finalize o pedido com segurança via WhatsApp.</p>
-                <h3>Privacidade</h3>
-                <p>Seus dados são utilizados exclusivamente para o processamento e entrega do seu pedido.</p>
+            <h2>POLÍTICAS</h2>
+            <div class="text-content" style="padding: 20px 0; color: #555;">
+                <h3>Trocas</h3><p>Aceitamos trocas em até 7 dias com etiqueta original.</p>
+                <h3 style="margin-top:15px;">Segurança</h3><p>Pagamento e finalização via WhatsApp para sua segurança.</p>
             </div>
         </div>
     </div>
@@ -60,20 +56,17 @@
             <div class="modal-content-grid">
                 <div class="modal-thumbs">
                     <img src="" class="thumb-item active" id="thumb-1">
-                    <img src="" class="thumb-item" id="thumb-2" style="opacity: 0.6;">
-                    <img src="" class="thumb-item" id="thumb-3" style="opacity: 0.6;">
+                    <img src="" class="thumb-item" id="thumb-2">
+                    <img src="" class="thumb-item" id="thumb-3">
                 </div>
                 <div class="modal-main-img-container"><img src="" id="modal-img" class="modal-main-img"></div>
                 <div class="modal-info-col">
-                    <div class="modal-status">Novo | <span id="modal-views">0</span> visualizações</div>
+                    <div class="modal-status" style="color:var(--primary-yellow); font-weight:bold;">🔥 EM ALTA</div>
                     <h1 class="modal-title" id="modal-name">Nome</h1>
-                    <div class="modal-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span style="color:#666;">(5.0)</span></div>
-                    <div class="modal-price-old">R$ 299,90</div>
+                    <div class="modal-rating"><i class="fas fa-star" style="color:#ffc200;"></i><i class="fas fa-star" style="color:#ffc200;"></i><i class="fas fa-star" style="color:#ffc200;"></i><i class="fas fa-star" style="color:#ffc200;"></i><i class="fas fa-star" style="color:#ffc200;"></i></div>
                     <div class="modal-price-current" id="modal-price">R$ 0,00</div>
                     <p id="modal-desc" style="font-size: 0.9rem; color: #555; margin-bottom: 15px; border-top: 1px solid #eee; padding-top: 10px;"></p>
-                    <div class="modal-installments">em até 3x sem juros</div>
-                    <div class="modal-shipping"><i class="fas fa-truck"></i> Frete Grátis para todo Brasil</div>
-                    <span class="size-label">Escolha o Tamanho:</span>
+                    <span class="size-label" style="font-weight:bold; display:block; margin-bottom:10px;">Escolha o Tamanho:</span>
                     <div class="size-selector" id="size-container">
                         <div class="size-btn" onclick="selectSize(this, 'P')">P</div>
                         <div class="size-btn" onclick="selectSize(this, 'M')">M</div>
@@ -82,11 +75,7 @@
                         <div class="size-btn" onclick="selectSize(this, 'XG')">XG</div>
                     </div>
                     <button class="btn-buy-modal" onclick="finalizarCompraZap()">COMPRAR AGORA</button>
-                    <button class="btn-whatsapp-modal" onclick="finalizarCompraZap()"><i class="fab fa-whatsapp"></i> Adicionar ao carrinho</button>
-                    <div class="garantia-box">
-                        <div class="garantia-item"><i class="fas fa-shield-alt"></i> Compra Garantida</div>
-                        <div class="garantia-item"><i class="fas fa-undo"></i> Devolução grátis em 7 dias</div>
-                    </div>
+                    <button class="btn-whatsapp-modal" onclick="adicionarAoCarrinhoDummy()"><i class="fas fa-cart-plus"></i> ADICIONAR À SACOLA</button>
                 </div>
             </div>
         </div>
@@ -95,51 +84,47 @@
     <div id="login-modal" class="modal-overlay">
         <div class="modal-box login-box-style">
             <i class="fas fa-times close-modal" onclick="closeModal('login-modal')"></i>
-            <h2 style="margin-bottom: 20px; font-family: 'Barlow Condensed'; font-weight: 800; text-align: center;">BEM-VINDO!</h2>
-            <button class="btn-google" onclick="loginGoogle()"><i class="fab fa-google"></i> CONTINUAR COM GOOGLE</button>
-            <div class="auth-divider">OU USE SEU E-MAIL</div>
+            <h2 style="margin-bottom: 20px; font-family: 'Barlow Condensed'; text-align: center;">BEM-VINDO!</h2>
+            <button class="btn-google" onclick="loginGoogle()"><i class="fab fa-google"></i> ENTRAR COM GOOGLE</button>
+            <div class="auth-divider">OU</div>
             <form id="auth-form">
-                <input type="text" id="auth-name" placeholder="Seu Nome (Apenas para cadastro)" class="hidden">
+                <input type="text" id="auth-name" placeholder="Seu Nome" class="hidden">
                 <input type="email" id="auth-email" placeholder="E-mail" required>
                 <input type="password" id="auth-password" placeholder="Senha" required>
-                <button type="submit" class="btn-cta" style="width: 100%; margin-bottom: 15px;" id="btn-auth-submit">ENTRAR</button>
+                <button type="submit" class="btn-cta" style="width: 100%;" id="btn-auth-submit">ENTRAR</button>
             </form>
-            <p style="font-size: 0.8rem; color: #666; cursor: pointer; text-decoration: underline; text-align: center;" onclick="toggleAuthMode()" id="auth-toggle-text">Não tem conta? <b>Cadastre-se aqui</b></p>
+            <p style="font-size: 0.8rem; text-align: center; margin-top: 10px; cursor: pointer; text-decoration: underline;" onclick="toggleAuthMode()" id="auth-toggle-text">Criar conta</p>
         </div>
     </div>
-
-    <div id="profile-modal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px; padding: 30px;">
-            <i class="fas fa-times close-modal" onclick="closeModal('profile-modal')"></i>
-            <h2 style="font-family: 'Barlow Condensed'; font-weight: 800; margin-bottom: 20px;">MEU PERFIL</h2>
-            <form id="profile-form">
-                <input type="text" id="user-name" placeholder="Nome Completo" readonly style="background: #f0f0f0;">
-                <input type="text" id="user-phone" placeholder="WhatsApp / Telefone (com DDD)">
-                <input type="text" id="user-cep" placeholder="CEP">
-                <textarea id="user-address" rows="3" placeholder="Endereço Completo (Rua, Número, Bairro, Cidade, Estado)"></textarea>
-                <button type="submit" class="btn-cta" style="width: 100%;">SALVAR DADOS</button>
-            </form>
-            <button type="button" onclick="logout()" style="width: 100%; margin-top: 10px; background: #333; color: white; padding: 10px; border: none; cursor: pointer;">SAIR DA CONTA</button>
-        </div>
-    </div>
-
+    
     <div class="fixed-header-container">
-        <div class="top-bar"><i class="fas fa-bell"></i> FRETE GRÁTIS PARA TODO BRASIL EM COMPRAS ACIMA DE R$ 199,90</div>
+        <div class="top-bar urgency-mode">
+            <i class="fas fa-clock"></i> ÚLTIMAS HORAS: FRETE GRÁTIS ACIMA DE R$ 199 <i class="fas fa-truck-fast"></i>
+        </div>
         <header>
             <div class="header-container">
-                <a href="#" class="logo"><i class="fas fa-shield-halved"></i><span>AM ESPORTES</span></a>
-                <div class="search-box"><input type="text" placeholder="Buscar time..."><i class="fas fa-search"></i></div>
+                <a href="#" class="logo" onclick="window.scrollTo(0,0)">
+                    <i class="fas fa-shield-halved"></i><span>AM ESPORTES</span>
+                </a>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="O que você procura hoje?" onkeyup="buscarProduto(this.value)">
+                    <i class="fas fa-search"></i>
+                </div>
                 <div class="user-nav">
-                    <div id="nav-login-btn" onclick="openModal('login-modal')" style="cursor: pointer;"><i class="far fa-user"></i> <span>Entrar</span></div>
-                    <div class="cart-icon"><i class="fas fa-bag-shopping" style="color: var(--primary-yellow);"></i><span class="badge">0</span></div>
+                    <div id="nav-login-btn" onclick="openModal('login-modal')"><i class="far fa-user"></i> <span>Entrar</span></div>
+                    <div class="cart-icon" onclick="showToast('Seu carrinho está vazio por enquanto!')">
+                        <i class="fas fa-bag-shopping"></i>
+                        <span class="badge" id="cart-count">0</span>
+                    </div>
                 </div>
             </div>
             <nav class="main-menu">
                 <ul id="menu-list">
                     <li><a href="#" class="active" onclick="window.scrollTo(0,0)">INÍCIO</a></li>
-                    <li><a href="#produtos">PRODUTOS</a></li>
-                    <li><a href="#footer" onclick="faleConosco()">CONTATO</a></li>
-                    <li><a href="#" onclick="openModal('medidas-modal')">TABELA DE MEDIDAS</a></li>
+                    <li><a href="#produtos">LANÇAMENTOS</a></li>
+                    <li><a href="#produtos">BRASILEIRÃO</a></li>
+                    <li><a href="#produtos">EUROPEUS</a></li>
+                    <li><a href="#footer">SUPORTE</a></li>
                 </ul>
             </nav>
         </header>
@@ -147,10 +132,10 @@
 
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-tag">ENVIO PARA TODO BRASIL <i class="fas fa-truck"></i></span>
-            <h1>VISTA A<br><span>PAIXÃO</span></h1>
-            <p>As camisas mais desejadas do futebol mundial com qualidade premium e preço justo.</p>
-            <a href="#produtos" class="btn-cta">COMPRAR AGORA <i class="fas fa-arrow-right"></i></a>
+            <span class="hero-tag">COLEÇÃO 2026</span>
+            <h1>VISTA A<br><span>GRANDEZA</span></h1>
+            <p>Os mantos mais pesados do mundo chegaram. Qualidade de jogador, preço de torcedor.</p>
+            <a href="#produtos" class="btn-cta">VER COLEÇÃO <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
@@ -160,84 +145,123 @@
             <div class="ticker-item" onclick="filtrarPorTime('palmeiras')"><i class="fas fa-shield-dog"></i> PAL</div>
             <div class="ticker-item" onclick="filtrarPorTime('corinthians')"><i class="fas fa-shield-heart"></i> COR</div>
             <div class="ticker-item" onclick="filtrarPorTime('sao paulo')"><i class="fas fa-shield-virus"></i> SAO</div>
-            <div class="ticker-item" onclick="filtrarPorTime('vasco')"><i class="fas fa-shield"></i> VAS</div>
+            <div class="ticker-item" onclick="filtrarPorTime('real madrid')"><i class="fas fa-crown"></i> REAL</div>
+            <div class="ticker-item" onclick="filtrarPorTime('barcelona')"><i class="fas fa-flag"></i> BARÇA</div>
+            <div class="ticker-item" onclick="filtrarPorTime('brasil')"><i class="fas fa-star"></i> BRA</div>
             <div class="ticker-item" onclick="filtrarPorTime('flamengo')"><i class="fas fa-shield-cat"></i> FLA</div>
             <div class="ticker-item" onclick="filtrarPorTime('palmeiras')"><i class="fas fa-shield-dog"></i> PAL</div>
+            <div class="ticker-item" onclick="filtrarPorTime('corinthians')"><i class="fas fa-shield-heart"></i> COR</div>
+            <div class="ticker-item" onclick="filtrarPorTime('sao paulo')"><i class="fas fa-shield-virus"></i> SAO</div>
+            <div class="ticker-item" onclick="filtrarPorTime('real madrid')"><i class="fas fa-crown"></i> REAL</div>
+            <div class="ticker-item" onclick="filtrarPorTime('barcelona')"><i class="fas fa-flag"></i> BARÇA</div>
+            <div class="ticker-item" onclick="filtrarPorTime('brasil')"><i class="fas fa-star"></i> BRA</div>
         </div>
     </div>
 
-    <section class="collections">
-        <div class="card c-brasileirao"><div class="card-bg"></div><div class="card-content"><p>COLEÇÃO</p><h3>BRASILEIRÃO</h3></div></div>
-        <div class="card c-europeus"><div class="card-bg"></div><div class="card-content"><p>COLEÇÃO</p><h3>EUROPEUS</h3></div></div>
-        <div class="card c-selecoes"><div class="card-bg"></div><div class="card-content"><p>COLEÇÃO</p><h3>SELEÇÕES</h3></div></div>
+    <section class="collections scroll-hidden">
+        <div class="card c-brasileirao" onclick="filtrarPorTime('brasil')">
+            <div class="card-bg"></div>
+            <div class="card-content">
+                <p>O MAIOR DO MUNDO</p><h3>BRASILEIRÃO</h3>
+                <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div>
+        <div class="card c-europeus" onclick="filtrarPorTime('real')">
+            <div class="card-bg"></div>
+            <div class="card-content">
+                <p>CHAMPIONS LEAGUE</p><h3>EUROPEUS</h3>
+                <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div>
+        <div class="card c-selecoes" onclick="filtrarPorTime('selecao')">
+            <div class="card-bg"></div>
+            <div class="card-content">
+                <p>RUMO AO HEXA</p><h3>SELEÇÕES</h3>
+                <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div>
     </section>
 
-    <section class="products-section" id="produtos">
+    <section class="products-section scroll-hidden" id="produtos">
         <div class="section-header">
-            <h2>ESCOLHA SEU <span style="color: var(--primary-yellow);">MANTO</span></h2>
+            <h2>DESTAQUES DA <span style="color: var(--primary-yellow);">SEMANA</span></h2>
             <div class="filters" id="dynamic-filters">
                 <button class="filter-btn active" data-filter="todos">TODOS</button>
             </div>
         </div>
-        <div class="products-grid" id="products-container"></div>
+        <div class="products-grid" id="products-container">
+            </div>
     </section>
 
     <footer id="footer">
-        <div class="footer-social">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
         <div class="footer-content">
             <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>AM ESPORTES</h2>
+                    <p>Especialistas em camisas de futebol. Qualidade premium, entrega rápida e a confiança de quem é apaixonado pelo esporte.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
                 <div class="footer-col">
-                    <h4>DEPARTAMENTOS</h4>
+                    <h4>A Loja</h4>
                     <ul>
                         <li><a href="#" onclick="window.scrollTo(0,0)">Início</a></li>
-                        <li><a href="#produtos">Produtos</a></li>
-                        <li><a href="#" onclick="filtrarLancamentos()">Lançamentos</a></li>
-                        <li><a href="#" onclick="openModal('medidas-modal')">Tabela de Medidas</a></li>
-                        <li><a href="#" onclick="openModal('politicas-modal')">Como Comprar</a></li>
-                        <li><a href="#" onclick="openModal('politicas-modal')">Trocas e Devoluções</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>INSTITUCIONAL</h4>
-                    <ul>
+                        <li><a href="#produtos">Lançamentos</a></li>
+                        <li><a href="#produtos">Mais Vendidos</a></li>
                         <li><a href="#" onclick="openModal('quem-somos-modal')">Quem Somos</a></li>
-                        <li><a href="#" onclick="openModal('politicas-modal')">Política de Privacidade</a></li>
-                        <li><a href="#" onclick="openModal('politicas-modal')">Termos de Uso</a></li>
-                        <li><a href="#" onclick="rastrearPedido()">Rastrear Pedido</a></li>
-                        <li><a href="#" onclick="faleConosco()">Fale Conosco</a></li>
                     </ul>
                 </div>
-                <div class="footer-col newsletter-col">
-                    <h4>NEWSLETTER</h4>
-                    <p>Cadastre-se para receber ofertas exclusivas.</p>
+
+                <div class="footer-col">
+                    <h4>Ajuda</h4>
+                    <ul>
+                        <li><a href="#" onclick="openModal('medidas-modal')">Tabela de Medidas</a></li>
+                        <li><a href="#" onclick="rastrearPedido()">Rastrear Pedido</a></li>
+                        <li><a href="#" onclick="openModal('politicas-modal')">Política de Trocas</a></li>
+                        <li><a href="#" onclick="faleConosco()">Falar no WhatsApp</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Fique por Dentro</h4>
+                    <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">Receba ofertas secretas e cupons.</p>
                     <div class="newsletter-box">
-                        <input type="email" placeholder="Digite seu e-mail...">
-                        <button>ENVIAR</button>
-                    </div>
-                    <div class="contact-info">
-                        <p><i class="fab fa-whatsapp"></i> (11) 98495-1595</p>
-                        <p><i class="far fa-envelope"></i> contato@amesportes.com</p>
+                        <input type="email" placeholder="Seu e-mail aqui...">
+                        <button onclick="showToast('Inscrito com sucesso!')">ENVIAR</button>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <div class="copyright-text">© 2026 AM Esportes - Todos os direitos reservados.</div>
-                <div class="taverna">TAVERNA SYSTEM</div>
-            </div>
+            <p>© 2026 AM Esportes. Todos os direitos reservados. <span class="taverna">TAVERNA SYSTEM</span></p>
         </div>
     </footer>
 
     <a href="#" class="whatsapp-float" onclick="faleConosco()"><i class="fab fa-whatsapp"></i></a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script type="module" src="./app.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = { threshold: 0.1 };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-show');
+                    }
+                });
+            }, observerOptions);
+
+            const hiddenElements = document.querySelectorAll('.scroll-hidden');
+            hiddenElements.forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
